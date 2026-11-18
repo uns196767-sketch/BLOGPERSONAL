@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sobreviviendo a la carrera · Almendra Nicolle</title>
+  <meta name="description" content="Blog de Almendra Nicolle: vida universitaria en Ingeniería de Sistemas e Informática, prácticas y su pasantía en la Universidad Complutense de Madrid." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,800;1,500;1,700&family=DM+Sans:wght@400;500;700&family=Caveat:wght@500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --crema: #fbf4ea;
+      --arena: #f3e3cc;
+      --papel: #fffaf3;
+      --terracota: #c8553d;
+      --ambar: #e8a33d;
+      --ladrillo: #8c2f1b;
+      --cafe: #2b1a12;
+      --texto: #4a372c;
+      --suave: #8a7362;
+      --linea: #ead9c2;
+
+      --titulo: "Playfair Display", Georgia, serif;
+      --cuerpo: "DM Sans", system-ui, sans-serif;
+      --mano: "Caveat", cursive;
+      --codigo: "JetBrains Mono", monospace;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--cuerpo);
+      background: var(--crema);
+      color: var(--texto);
+      line-height: 1.7;
+      font-size: 17px;
+    }
+    img { display: block; max-width: 100%; }
+    a { color: var(--terracota); }
+    .wrap { max-width: 1080px; margin: 0 auto; padding: 0 28px; }
+
+    /* ---------- ESPACIOS PARA IMÁGENES ----------
+       Si la imagen existe, se muestra. Si no, se ve un recuadro
+       punteado que te indica qué foto va ahí y con qué nombre. */
+    .foto {
+      position: relative;
+      overflow: hidden;
+      background:
+        repeating-linear-gradient(45deg, transparent 0 12px, rgba(200,85,61,.06) 12px 24px),
+        var(--arena);
+      border: 2px dashed rgba(200,85,61,.45);
+      display: grid; place-items: center;
+      text-align: center;
+    }
+    .foto .aviso {
+      font-family: var(--codigo);
+      font-size: .75rem;
+      color: var(--terracota);
+      padding: 10px;
+      line-height: 1.5;
+    }
+    .foto .aviso b { display: block; font-family: var(--mano); font-size: 1.35rem; color: var(--ladrillo); }
+    .foto img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+    .foto:has(img) { border-style: solid; border-color: transparent; }
+
+    /* ---------- MENÚ ---------- */
+    nav {
+      position: sticky; top: 0; z-index: 20;
+      background: rgba(251, 244, 234, .9);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--linea);
+    }
+    nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 68px; }
+    .logo {
+      font-family: var(--titulo); font-style: italic; font-weight: 700;
+      font-size: 1.45rem; color: var(--cafe); text-decoration: none;
+    }
+    .logo span { color: var(--terracota); font-style: normal; }
+    nav ul { list-style: none; display: flex; gap: 26px; }
+    nav ul a {
+      font-family: var(--codigo); font-size: .82rem; letter-spacing: .02em;
+      color: var(--texto); text-decoration: none;
+    }
+    nav ul a::before { content: "./"; color: var(--ambar); }
+    nav ul a:hover { color: var(--terracota); }
+
+    /* ---------- PORTADA ---------- */
+    .hero {
+      padding: 80px 0 70px;
+      background:
+        radial-gradient(circle at 85% 20%, rgba(232,163,61,.28), transparent 45%),
+        radial-gradient(circle at 10% 90%, rgba(200,85,61,.18), transparent 40%);
+    }
+    .hero .wrap { display: grid; grid-template-columns: 1.25fr 1fr; gap: 56px; align-items: center; }
+    .saludo { font-family: var(--mano); font-size: 2rem; color: var(--terracota); transform: rotate(-2deg); display: inline-block; }
+    .hero h1 {
+      font-family: var(--titulo); font-weight: 800;
+      font-size: clamp(2.6rem, 6vw, 4.4rem);
+      line-height: 1.02; color: var(--cafe);
+      margin: 6px 0 18px;
+    }
+    .hero h1 em { font-weight: 500; color: var(--terracota); }
+    .rol {
+      font-family: var(--codigo); font-size: .9rem;
+      background: var(--cafe); color: var(--arena);
+      display: inline-block; padding: 6px 14px; border-radius: 6px;
+      margin-bottom: 20px;
+    }
+    .rol span { color: var(--ambar); }
+    .hero p.intro { font-size: 1.12rem; max-width: 520px; }
+    .botones { display: flex; gap: 14px; margin-top: 30px; flex-wrap: wrap; }
+    .btn {
+      font-weight: 700; text-decoration: none; font-size: .95rem;
+      padding: 13px 24px; border-radius: 999px;
+      transition: transform .15s ease, box-shadow .15s ease;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-lleno { background: var(--terracota); color: #fff; box-shadow: 0 8px 20px rgba(200,85,61,.3); }
+    .btn-borde { border: 2px solid var(--cafe); color: var(--cafe); }
+
+    .hero-foto-cont { position: relative; }
+    .hero-foto { aspect-ratio: 4/5; border-radius: 200px 200px 24px 24px; }
+    .sello {
+      position: absolute; bottom: -18px; left: -24px;
+      background: var(--ambar); color: var(--cafe);
+      font-family: var(--mano); font-size: 1.5rem; font-weight: 700;
+      padding: 10px 20px; border-radius: 14px;
+      transform: rotate(-6deg);
+      box-shadow: 0 10px 24px rgba(43,26,18,.18);
+    }
+
+    /* ---------- SECCIONES ---------- */
+    section { padding: 80px 0; }
+    .encabezado { margin-bottom: 40px; }
+    .encabezado .num { font-family: var(--codigo); font-size: .82rem; color: var(--terracota); }
+    .encabezado h2 {
+      font-family: var(--titulo); font-size: clamp(2rem, 4vw, 2.8rem);
+      color: var(--cafe); line-height: 1.1;
+    }
+    .encabezado h2 em { color: var(--terracota); font-weight: 500; }
+    .encabezado p.nota { font-family: var(--mano); font-size: 1.4rem; color: var(--suave); margin-top: 4px; }
+
+    /* Sobre mí */
+    .sobre { background: var(--papel); border-top: 1px solid var(--linea); border-bottom: 1px solid var(--linea); }
+    .sobre .wrap { display: grid; grid-template-columns: 1fr 1.4fr; gap: 56px; align-items: start; }
+    .sobre-foto { aspect-ratio: 1/1; border-radius: 24px; transform: rotate(-2deg); }
+    .sobre p + p { margin-top: 14px; }
+    .datos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 30px; }
+    .dato { background: var(--crema); border: 1px solid var(--linea); border-radius: 16px; padding: 18px; }
+    .dato strong { display: block; font-family: var(--titulo); font-size: 2rem; color: var(--terracota); line-height: 1; }
+    .dato span { font-size: .85rem; color: var(--suave); }
+
+    /* Habilidades */
+    .stack { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+    .grupo { background: var(--papel); border: 1px solid var(--linea); border-radius: 18px; padding: 22px; }
+    .grupo h3 { font-family: var(--titulo); font-style: italic; color: var(--cafe); font-size: 1.2rem; margin-bottom: 12px; }
+    .chips { display: flex; flex-wrap: wrap; gap: 7px; }
+    .chip {
+      font-family: var(--codigo); font-size: .74rem;
+      background: var(--arena); color: var(--ladrillo);
+      padding: 4px 10px; border-radius: 6px;
+    }
+
+    /* Proyectos */
+    .proyectos { background: var(--cafe); color: var(--arena); }
+    .proyectos .encabezado h2 { color: var(--crema); }
+    .proyectos .encabezado h2 em { color: var(--ambar); }
+    .proyectos .encabezado p.nota { color: #c9ad92; }
+    .grid-proy { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+    .proy { background: #3a251a; border-radius: 20px; overflow: hidden; border: 1px solid #4d3324; transition: transform .2s ease; }
+    .proy:hover { transform: translateY(-4px); }
+    .proy .foto { aspect-ratio: 16/10; border: none; border-bottom: 2px dashed rgba(232,163,61,.4); background: repeating-linear-gradient(45deg, transparent 0 12px, rgba(232,163,61,.07) 12px 24px), #4a3022; }
+    .proy .foto .aviso { color: var(--ambar); }
+    .proy .foto .aviso b { color: var(--arena); }
+    .proy-cuerpo { padding: 22px; }
+    .proy h3 { font-family: var(--titulo); font-size: 1.3rem; color: var(--crema); margin-bottom: 6px; }
+    .proy p { font-size: .95rem; color: #d8c2ab; }
+    .proy .chips { margin: 14px 0; }
+    .proy .chip { background: #4d3324; color: var(--ambar); }
+    .proy a { font-family: var(--codigo); font-size: .82rem; color: var(--ambar); text-decoration: none; margin-right: 14px; }
+    .proy a:hover { text-decoration: underline; }
+
+    /* Blog */
+    .grid-posts { display: grid; grid-template-columns: repeat(2, 1fr); gap: 26px; }
+    .post { background: var(--papel); border: 1px solid var(--linea); border-radius: 22px; overflow: hidden; display: flex; flex-direction: column; transition: box-shadow .2s ease, transform .2s ease; }
+    .post:hover { transform: translateY(-3px); box-shadow: 0 16px 36px rgba(140,47,27,.1); }
+    .post .foto { aspect-ratio: 16/9; border: none; border-bottom: 2px dashed rgba(200,85,61,.35); }
+    .post-cuerpo { padding: 24px 26px 26px; display: flex; flex-direction: column; flex: 1; }
+    .meta { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; font-size: .8rem; color: var(--suave); margin-bottom: 10px; }
+    .meta .cat { font-family: var(--codigo); background: var(--terracota); color: #fff; padding: 2px 9px; border-radius: 5px; font-size: .72rem; }
+    .post h3 { font-family: var(--titulo); font-size: 1.45rem; color: var(--cafe); line-height: 1.22; margin-bottom: 10px; }
+    .completo { display: none; margin-top: 14px; padding-top: 14px; border-top: 1px dashed var(--linea); }
+    .post.abierto .completo { display: block; }
+    .completo p + p { margin-top: 12px; }
+    .leer { margin-top: auto; padding-top: 16px; background: none; border: none; cursor: pointer; text-align: left; font-family: var(--mano); font-size: 1.35rem; color: var(--terracota); }
+    .cargando { font-family: var(--mano); font-size: 1.4rem; color: var(--suave); }
+
+    /* Trayectoria */
+    .linea-tiempo { border-left: 3px solid var(--ambar); padding-left: 30px; display: grid; gap: 30px; }
+    .hito { position: relative; }
+    .hito::before {
+      content: ""; position: absolute; left: -40px; top: 6px;
+      width: 17px; height: 17px; border-radius: 50%;
+      background: var(--terracota); border: 3px solid var(--crema);
+    }
+    .hito .fecha { font-family: var(--codigo); font-size: .8rem; color: var(--terracota); }
+    .hito h3 { font-family: var(--titulo); font-size: 1.25rem; color: var(--cafe); }
+    .hito p { font-size: .97rem; }
+
+    /* Galería */
+    .galeria { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 170px; gap: 14px; }
+    .galeria .foto { border-radius: 16px; }
+    .galeria .g1 { grid-column: span 2; grid-row: span 2; }
+    .galeria .g4 { grid-column: span 2; }
+
+    /* Contacto */
+    .contacto { background: linear-gradient(135deg, var(--terracota), var(--ladrillo)); color: #fff; text-align: center; border-radius: 32px; padding: 64px 32px; }
+    .contacto h2 { font-family: var(--titulo); font-size: clamp(2rem, 5vw, 3.2rem); line-height: 1.1; }
+    .contacto h2 em { color: var(--ambar); }
+    .contacto p { font-family: var(--mano); font-size: 1.6rem; opacity: .9; margin: 8px 0 28px; }
+    .redes { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; }
+    .redes a { font-family: var(--codigo); font-size: .88rem; text-decoration: none; color: #fff; border: 1.5px solid rgba(255,255,255,.55); padding: 11px 20px; border-radius: 999px; }
+    .redes a:hover { background: #fff; color: var(--ladrillo); }
+
+    footer { text-align: center; padding: 40px 0; font-size: .85rem; color: var(--suave); }
+    footer code { font-family: var(--codigo); color: var(--terracota); }
+
+    /* ---------- CELULAR ---------- */
+    @media (max-width: 860px) {
+      .hero .wrap, .sobre .wrap { grid-template-columns: 1fr; gap: 40px; }
+      .hero-foto-cont { max-width: 340px; }
+      .stack { grid-template-columns: repeat(2, 1fr); }
+      .grid-proy { grid-template-columns: 1fr; }
+      .grid-posts { grid-template-columns: 1fr; }
+      .galeria { grid-template-columns: repeat(2, 1fr); }
+      .galeria .g1, .galeria .g4 { grid-column: span 2; }
+      nav ul { display: none; }
+    }
+    @media (max-width: 520px) {
+      .datos { grid-template-columns: 1fr 1fr; }
+      .stack { grid-template-columns: 1fr; }
+    }
+
+    /* ---------- GUÍA DE SUPERVIVENCIA ---------- */
+    .tips { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .tip { background: var(--papel); border: 1px solid var(--linea); border-radius: 20px; padding: 26px; position: relative; overflow: hidden; }
+    .tip .n { font-family: var(--titulo); font-style: italic; font-size: 3.4rem; line-height: 1; color: var(--arena); position: absolute; top: 12px; right: 18px; }
+    .tip .ico { font-size: 1.8rem; }
+    .tip h3 { font-family: var(--titulo); font-size: 1.2rem; color: var(--cafe); margin: 10px 0 6px; position: relative; }
+    .tip p { font-size: .95rem; position: relative; }
+    .tip .ciclo { font-family: var(--codigo); font-size: .72rem; color: var(--terracota); }
+
+    /* ---------- PASANTÍA ---------- */
+    .pasantia { background: var(--cafe); color: var(--arena); }
+    .pasantia .encabezado h2 { color: var(--crema); }
+    .pasantia .encabezado h2 em { color: var(--ambar); }
+    .pasantia .encabezado p.nota { color: #c9ad92; }
+    .pas-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+    .pas-fotos { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 220px 160px; gap: 12px; }
+    .pas-fotos .foto { border-radius: 18px; border-color: rgba(232,163,61,.45); background: repeating-linear-gradient(45deg, transparent 0 12px, rgba(232,163,61,.07) 12px 24px), #4a3022; }
+    .pas-fotos .foto .aviso { color: var(--ambar); }
+    .pas-fotos .foto .aviso b { color: var(--arena); }
+    .pas-fotos .p1 { grid-column: span 2; }
+    .pas-texto p { color: #e4cfb8; }
+    .pas-texto p + p { margin-top: 14px; }
+    .pas-texto strong { color: var(--ambar); }
+    .ficha { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 26px 0; }
+    .ficha div { background: #3a251a; border: 1px solid #4d3324; border-radius: 14px; padding: 14px 16px; }
+    .ficha span { display: block; font-family: var(--codigo); font-size: .7rem; color: var(--ambar); text-transform: uppercase; letter-spacing: .06em; }
+    .ficha b { font-family: var(--titulo); font-size: 1.05rem; color: var(--crema); font-weight: 600; }
+    .cita { font-family: var(--mano); font-size: 1.7rem; color: var(--ambar); line-height: 1.3; border-left: 3px solid var(--terracota); padding-left: 18px; }
+
+    /* Filtros del blog */
+    .filtros { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+    .filtros button { font-family: var(--codigo); font-size: .78rem; background: var(--papel); color: var(--texto); border: 1.5px solid var(--linea); padding: 7px 14px; border-radius: 999px; cursor: pointer; }
+    .filtros button.activo, .filtros button:hover { background: var(--terracota); color: #fff; border-color: var(--terracota); }
+
+    @media (max-width: 860px) {
+      .tips { grid-template-columns: 1fr; }
+      .pas-grid { grid-template-columns: 1fr; }
+    }
+
+    /* Versión reducida */
+    .sobre .wrap.sobre-simple { grid-template-columns: 1fr 1.6fr; }
+    .tips { grid-template-columns: repeat(3, 1fr); }
+    .pas-foto { aspect-ratio: 4/5; border-radius: 24px; border-color: rgba(232,163,61,.45); background: repeating-linear-gradient(45deg, transparent 0 12px, rgba(232,163,61,.07) 12px 24px), #4a3022; }
+    .pas-foto .aviso { color: var(--ambar); }
+    .pas-foto .aviso b { color: var(--arena); }
+    @media (max-width: 860px) { .sobre .wrap.sobre-simple { grid-template-columns: 1fr; } .pas-foto { max-width: 380px; } }
+
+    /* Fotos reales */
+    .sobre-foto2 { aspect-ratio: 3/4; border-radius: 22px; border: none; margin-top: 28px; transform: rotate(-2deg); box-shadow: 0 18px 40px rgba(140,47,27,.18); max-width: 320px; }
+    .pie { font-family: var(--mano); font-size: 1.3rem; color: var(--suave); margin-top: 10px; max-width: 320px; text-align: center; }
+    .pas-mosaico { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 300px 190px; gap: 12px; }
+    .pas-mosaico figure { position: relative; overflow: hidden; border-radius: 18px; margin: 0; }
+    .pas-mosaico .m1 { grid-column: span 2; }
+    .pas-mosaico img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s ease; }
+    .pas-mosaico figure:hover img { transform: scale(1.05); }
+    .pas-mosaico .m1 img { object-position: 50% 60%; }
+    .pas-mosaico figcaption { position: absolute; left: 12px; bottom: 10px; font-family: var(--mano); font-size: 1.35rem; color: #fff; text-shadow: 0 2px 8px rgba(0,0,0,.6); }
+    .hero-foto { box-shadow: 0 24px 50px rgba(140,47,27,.22); }
+    .post .foto { border: none; }
+    .post .foto img { transition: transform .4s ease; }
+    .post:hover .foto img { transform: scale(1.04); }
+    #lista-posts { grid-template-columns: repeat(6, 1fr); }
+    #lista-posts .post { grid-column: span 2; }
+    #lista-posts .post.destacado { grid-column: span 6; flex-direction: row; }
+    #lista-posts .post.destacado.inverso { flex-direction: row-reverse; }
+    .post.destacado .foto { width: 46%; aspect-ratio: auto; flex-shrink: 0; min-height: 340px; }
+    .post.destacado h3 { font-size: 1.8rem; }
+    .mini-galeria { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 16px; }
+    .mini-galeria figure { margin: 0; }
+    .mini-galeria img { width: 100%; aspect-ratio: 4/3; object-fit: cover; border-radius: 12px; }
+    .mini-galeria figcaption { font-family: var(--codigo); font-size: .72rem; color: var(--suave); margin-top: 4px; }
+    @media (max-width: 860px) {
+      #lista-posts { grid-template-columns: 1fr; }
+      #lista-posts .post, #lista-posts .post.destacado, #lista-posts .post.destacado.inverso { grid-column: auto; flex-direction: column; }
+      .post.destacado .foto { width: 100%; min-height: 0; aspect-ratio: 16/9; }
+      .pas-mosaico { grid-template-rows: 220px 150px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="wrap">
+      <a href="#" class="logo">Almendra<span>Nicolle</span>.</a>
+      <ul>
+        <li><a href="#sobre-mi">sobre-mí</a></li>
+        <li><a href="#guia">guía</a></li>
+        <li><a href="#madrid">madrid</a></li>
+        <li><a href="#blog">blog</a></li>
+        <li><a href="#contacto">contacto</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ================= PORTADA ================= -->
+  <header class="hero">
+    <div class="wrap">
+      <div>
+        <span class="saludo">¡Hola! soy Almendra Nicolle</span>
+        <h1>Sobreviviendo a <em>la carrera</em></h1>
+        <div class="rol">&gt; Ing. de Sistemas e Informática <span>· IX ciclo</span></div>
+        <p class="intro">
+          Consejos reales para los que vienen detrás: cómo pasar los cursos difíciles,
+          qué esperar de las prácticas… y cómo terminé estudiando en
+          <strong>la Universidad Complutense de Madrid</strong>.
+        </p>
+        <div class="botones">
+          <a href="#blog" class="btn btn-lleno">Leer el blog</a>
+          <a href="#madrid" class="btn btn-borde">Mi pasantía en Madrid ✈</a>
+        </div>
+      </div>
+      <div class="hero-foto-cont">
+        <div class="foto hero-foto">
+          <div class="aviso"><b>Tu foto aquí</b>img/perfil.jpg<br>(vertical)</div>
+          <img src="img/perfil.jpg" alt="Almendra Nicolle en el Edificio de Estudiantes de la UCM" >
+        </div>
+        <div class="sello">Lima → Madrid ✈ 9 524 km</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= SOBRE MÍ ================= -->
+  <section class="sobre" id="sobre-mi">
+    <div class="wrap sobre-simple">
+      <div class="encabezado">
+        <span class="num">01 / sobre mí</span>
+        <h2>Nueve ciclos, <em>muchas lecciones</em></h2>
+        <div class="foto sobre-foto2"><img src="img/facultad2.jpg" alt="Facultad de Informática UCM"></div>
+        <p class="pie">Facultad de Informática · UCM</p>
+      </div>
+      <div>
+        <p>Soy <strong>Almendra Nicolle</strong>, estudiante de noveno ciclo de Ingeniería de Sistemas e Informática. Como muchos, tuve cursos que me hicieron dudar, y el más fuerte fue <strong>Arquitectura de Software</strong>. Pero aquí sigo, a un paso de terminar.</p>
+        <p>En el camino hice mis <strong>prácticas preprofesionales en la DIREPRO de Chimbote</strong>, en el área administrativa, y viví una <strong>pasantía internacional en la Universidad Complutense de Madrid</strong>, donde llevé cursos de mi carrera.</p>
+        <p>Creé este blog para contar lo que me hubiera gustado saber en primer ciclo. Si estás empezando, esto es para ti.</p>
+        <div class="datos">
+          <div class="dato"><strong>IX</strong><span>ciclo académico</span></div>
+          <div class="dato"><strong>2</strong><span>países donde estudié</span></div>
+          <div class="dato"><strong>1</strong><span>experiencia de prácticas</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= GUÍA ================= -->
+  <section id="guia">
+    <div class="wrap">
+      <div class="encabezado">
+        <span class="num">02 / guía de supervivencia</span>
+        <h2>Lo que me hubiera gustado <em>saber antes</em></h2>
+      </div>
+      <div class="tips">
+        <div class="tip"><span class="n">01</span><div class="ico">🌱</div><span class="ciclo">primeros ciclos</span>
+          <h3>No le tengas miedo a programar</h3>
+          <p>Nadie llega sabiendo. Practica un poco cada día y apóyate en tus compañeros: los grupos de estudio salvan cursos.</p></div>
+        <div class="tip"><span class="n">02</span><div class="ico">🌍</div><span class="ciclo">ciclos intermedios</span>
+          <h3>Busca oportunidades fuera del aula</h3>
+          <p>Movilidades, pasantías y concursos. Así llegué a Madrid: revisando las convocatorias de mi universidad.</p></div>
+        <div class="tip"><span class="n">03</span><div class="ico">💼</div><span class="ciclo">últimos ciclos</span>
+          <h3>Las prácticas te enseñan lo que el aula no</h3>
+          <p>No descartes un área por no ser "de programación". Entender cómo trabaja una organización también es ingeniería.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PASANTÍA MADRID ================= -->
+  <section class="pasantia" id="madrid">
+    <div class="wrap">
+      <div class="encabezado">
+        <span class="num">03 / experiencia internacional</span>
+        <h2>Mi pasantía en la <em>Complutense de Madrid</em></h2>
+        <p class="nota">la experiencia que cambió mi carrera ✈</p>
+      </div>
+      <div class="pas-grid">
+        <div class="pas-mosaico">
+          <figure class="m1"><img src="img/facultad.jpg" alt="Facultad de Informática de la UCM"><figcaption>la facultad</figcaption></figure>
+          <figure class="m2"><img src="img/clase.jpg" alt="Clase en la UCM"><figcaption>en clase</figcaption></figure>
+          <figure class="m3"><img src="img/horario.jpg" alt="Pantalla de horarios de la facultad"><figcaption>los horarios</figcaption></figure>
+        </div>
+        <div class="pas-texto">
+          <p>Realicé una <strong>pasantía internacional en la Universidad Complutense de Madrid (UCM)</strong>, una de las universidades más grandes y antiguas de España.</p>
+          <p>En la <strong>Facultad de Informática</strong> llevé <strong>cursos relacionados con mi carrera</strong>, compartí aulas con estudiantes de distintos países y aprendí a desenvolverme sola en una ciudad nueva.</p>
+          <div class="ficha">
+            <div><span>Universidad</span><b>Complutense de Madrid</b></div>
+            <div><span>País</span><b>España 🇪🇸</b></div>
+            <div><span>Facultad</span><b>Informática</b></div>
+            <div><span>Distancia</span><b>9 524 km desde Lima ✈</b></div>
+          </div>
+          <p class="cita">“Salir de tu zona de confort es la mejor clase que vas a llevar.”</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= BLOG ================= -->
+  <section id="blog">
+    <div class="wrap">
+      <div class="encabezado">
+        <span class="num">04 / blog</span>
+        <h2>Historias y <em>consejos</em></h2>
+      </div>
+      <div class="grid-posts" id="lista-posts"><p class="cargando">cargando entradas…</p></div>
+    </div>
+  </section>
+
+  <!-- ================= TRAYECTORIA ================= -->
+  <section style="padding-top: 20px;">
+    <div class="wrap">
+      <div class="encabezado">
+        <span class="num">05 / mi camino</span>
+        <h2>Ciclo a <em>ciclo</em></h2>
+      </div>
+      <div class="linea-tiempo">
+        <div class="hito">
+          <span class="fecha">IX ciclo · actualidad</span>
+          <h3>Recta final de la carrera</h3>
+          <p>Cerrando los últimos cursos y pensando en lo que viene.</p>
+        </div>
+        <div class="hito">
+          <span class="fecha">experiencia profesional</span>
+          <h3>Prácticas preprofesionales · DIREPRO Chimbote</h3>
+          <p>Apoyo en el área administrativa y en la organización de procesos.</p>
+        </div>
+        <div class="hito">
+          <span class="fecha">experiencia internacional</span>
+          <h3>Pasantía · Universidad Complutense de Madrid</h3>
+          <p>Cursos relacionados con Ingeniería de Sistemas e Informática en España.</p>
+        </div>
+        <div class="hito">
+          <span class="fecha">el reto más grande</span>
+          <h3>Sobreviví a Arquitectura de Software</h3>
+          <p>El curso más fuerte de la carrera, y el que más me enseñó a pensar en sistemas completos.</p>
+        </div>
+        <div class="hito">
+          <span class="fecha">I ciclo</span>
+          <h3>El comienzo</h3>
+          <p>Ingresé a Ingeniería de Sistemas e Informática con muchas dudas y muchas ganas.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CONTACTO ================= -->
+  <section id="contacto" class="wrap" style="padding-top: 20px;">
+    <div class="contacto">
+      <h2>¿Tienes <em>preguntas</em>?</h2>
+      <p>sobre la carrera, las prácticas o la pasantía… escríbeme ✦</p>
+      <!-- CAMBIA: pon tu correo y tu LinkedIn reales -->
+      <div class="redes">
+        <a href="mailto:tucorreo@ejemplo.com">✉ correo</a>
+        <a href="https://www.linkedin.com/in/tu-usuario" target="_blank">in linkedin</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    © <span id="anio"></span> Almendra Nicolle · blog desplegado en Vercel con <code>/api/posts</code>
+  </footer>
+
+  <script>
+    document.getElementById("anio").textContent = new Date().getFullYear();
+
+    function fecha(iso) {
+      return new Date(iso + "T12:00:00").toLocaleDateString("es-PE", { day: "numeric", month: "long", year: "numeric" });
+    }
+
+    function pintar(posts) {
+      const cont = document.getElementById("lista-posts");
+      cont.innerHTML = "";
+      posts.forEach(p => {
+        const art = document.createElement("article");
+        art.className = "post" + (p.destacado ? " destacado" : "") + (p.inverso ? " inverso" : "");
+        const foto = p.imagen
+          ? `<div class="foto"><img src="${p.imagen}" alt="" style="object-position:${p.posicion || 'center'}" onerror="this.parentElement.remove()"></div>`
+          : "";
+        art.innerHTML = `
+          ${foto}
+          <div class="post-cuerpo">
+            <div class="meta"><span class="cat">${p.categoria}</span><span>${fecha(p.fecha)}</span><span>· ${p.lectura} de lectura</span></div>
+            <h3>${p.titulo}</h3>
+            <p>${p.resumen}</p>
+            <div class="completo">${p.contenido.map(t => `<p>${t}</p>`).join("")}${p.galeria ? `<div class="mini-galeria">${p.galeria.map(g => `<figure><img src="${g.src}" alt="${g.pie}"><figcaption>${g.pie}</figcaption></figure>`).join("")}</div>` : ""}</div>
+            <button class="leer">leer más →</button>
+          </div>`;
+        art.querySelector(".leer").addEventListener("click", e => {
+          art.classList.toggle("abierto");
+          e.target.textContent = art.classList.contains("abierto") ? "leer menos ↑" : "leer más →";
+        });
+        cont.appendChild(art);
+      });
+    }
+
+    function errorPosts() {
+      document.getElementById("lista-posts").innerHTML =
+        '<p class="cargando">no se pudieron cargar las entradas — revisa que la carpeta api esté subida</p>';
+    }
+
+    // Si abres el archivo desde tu PC, lee las entradas directo de api/posts.js
+    function cargarLocal() {
+      const sc = document.createElement("script");
+      sc.src = "api/posts.js";
+      sc.onload = () => window.POSTS ? pintar(window.POSTS) : errorPosts();
+      sc.onerror = errorPosts;
+      document.body.appendChild(sc);
+    }
+
+    if (location.protocol === "file:") {
+      cargarLocal();
+    } else {
+      fetch("/api/posts")
+        .then(r => { if (!r.ok) throw new Error(); return r.json(); })
+        .then(pintar)
+        .catch(cargarLocal);
+    }
+  </script>
+</body>
+</html>
